@@ -205,6 +205,14 @@ def simulation():
     #     thread.join()
 
 
+def simulate_one_process():
+    s_config = config.Config()
+    thread_pool = []
+    network = Network(s_config.relay_possibility, s_config.peer_size, s_config.neighbor_size)
+    network.generate_nodes()
+    simulate_msgs(network, 0)
+
+
 def simulate_msgs(network, index):
     msg_id = 0
     for neighbor_size in config.neighbor_size_range:
