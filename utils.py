@@ -25,7 +25,8 @@ def save_result(time_array, total_redundant, network, msg, target_time, root_ind
 
     with open(config.save_dir + file_name, "w+") as f:
         json.dump(result, f)
-        print("save file " + config.save_dir + file_name)
+        if config.show_log:
+            print("save file " + config.save_dir + file_name)
 
 
 def load_result(path):

@@ -285,8 +285,9 @@ def calculate_target_time(network, root_index):
 
 
 def simulate_one_msg(network, root_index, msg):
-    print(str(root_index) + '_' + str(network.neighbor_size) + "_" + str(network.alpha) + "_" + str(msg.ttl) + "_" +
-          str(msg.id) + ".json" + " start")
+    if config.show_log:
+        print(str(root_index) + '_' + str(network.neighbor_size) + "_" + str(network.alpha) + "_" + str(msg.ttl) + "_" +
+              str(msg.id) + ".json" + " start")
     all_nodes = network.nodes
     root_node = all_nodes[root_index]
     time_distance = dict()
@@ -328,9 +329,10 @@ def simulate_one_msg(network, root_index, msg):
                 min_dis = time_distance[node_id]
         # unconnected graph
         if min_id == -1:
-            print("index:" + str(root_index) + "  " + str(
-                len(unreceived_ids)) + " nodes can never receive the message " + str(
-                msg.id))
+            if config.show_log:
+                print("index:" + str(root_index) + "  " + str(
+                    len(unreceived_ids)) + " nodes can never receive the message " + str(
+                    msg.id))
             break
         received_ids.append(min_id)
         unreceived_ids.remove(min_id)

@@ -14,7 +14,7 @@ class Config:
 
 
 # save dir
-save_dir = "data2/"
+save_dir = "data/"
 
 neighbor_size_range = [7, 8, 9, 10, 11, 12, 13, 14, 15]
 p_range = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]
@@ -27,3 +27,5 @@ transfer_time_range = [0.05, 0.35]  # 0.35s -- 3.5s
 target_time = 6  # 6s
 ttl_max = 10
 max_index = 5
+
+show_log = False
