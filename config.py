@@ -26,6 +26,6 @@ transfer_time_range = [0.05, 0.35]  # 0.35s -- 3.5s
 
 target_time = 6  # 6s
 ttl_max = 10
-max_index = 5
+max_index = 100
 
-show_log = False
+show_log = True
