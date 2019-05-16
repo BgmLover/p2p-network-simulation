@@ -22,10 +22,12 @@ delay_range = [0.05, 0.6]  # 0.05s -- 0.6s
 # levelset_size = 1000 * 0.5 * 7  # 3500kB
 block_size = 0.5 + 0.04  # 0.54 kB
 speed_range = [1 * 1000, 10 * 1000]  # 1M/s -- 10M/s
-transfer_time_range = [block_size/speed_range[1], block_size/speed_range[0]]
+transfer_time_range = [block_size / speed_range[1], block_size / speed_range[0]]
 
 target_time = 6  # 6s
 ttl_max = 10
 max_index = 1000
 
 show_log = True
+
+process_size = 100

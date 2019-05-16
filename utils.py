@@ -18,12 +18,12 @@ def save_result(time_array, total_redundant, network, msg, target_time, root_ind
     for num in time_array:
         result["time_array"].append(float(num))
 
-    if not os.path.exists(config.save_dir):
-        os.makedirs(config.save_dir)
-    file_name = str(root_index) + '_' + str(network.neighbor_size) + "_" + str(network.alpha) + "_" + str(
-        msg.ttl) + "_" + str(msg.id) + ".json"
+    f_dir = config.save_dir + str(root_index) + '/'
+    if not os.path.exists(f_dir):
+        os.makedirs(f_dir)
+    file_name = str(network.neighbor_size) + "_" + str(network.alpha) + "_" + str(msg.ttl) + ".json"
 
-    with open(config.save_dir + file_name, "w+") as f:
+    with open(f_dir + file_name, "w+") as f:
         json.dump(result, f)
         if config.show_log:
             print("save file " + config.save_dir + file_name)

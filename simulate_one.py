@@ -12,7 +12,8 @@ def simulate_one(index):
 
 if __name__ == '__main__':
     if len(sys.argv) == 2:
-        for i in range(100):
-            simulate_one(int(sys.argv[1]) * 100 + i)
+        task_size = int(config.max_index / config.process_size)
+        for i in range(task_size):
+            simulate_one(int(sys.argv[1]) * task_size + i)
     else:
         print("wrong parameters")
