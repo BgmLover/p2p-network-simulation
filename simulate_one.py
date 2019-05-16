@@ -12,7 +12,7 @@ def simulate_one(index):
 
 if __name__ == '__main__':
     if len(sys.argv) == 2:
-        for i in range(10):
-            simulate_one(int(10 * sys.argv[1] + i))
+        for i in range(100):
+            simulate_one(int(sys.argv[1]) * 100 + i)
     else:
         print("wrong parameters")

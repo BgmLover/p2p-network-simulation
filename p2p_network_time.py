@@ -127,8 +127,8 @@ class Network:
             # normal distribution
             u_d = 0.5 * (config.delay_range[0] + config.delay_range[1])
             delay_time = np.random.normal(u_d, 0.1, size)
-            u_t = 0.5 * (config.transfer_time_range[0] + config.transfer_time_range[1])
-            transfer_time = np.random.normal(u_t, 0.2, size)
+            # u_t = 0.5 * (config.transfer_time_range[0] + config.transfer_time_range[1])
+            # transfer_time = np.random.normal(u_t, 0.2, size)
 
             d_index = 0
             t_index = 0
@@ -144,12 +144,12 @@ class Network:
                             break
                         else:
                             d_index = d_index + 1
-                    while True:
-                        if config.transfer_time_range[0] <= transfer_time[t_index] <= config.transfer_time_range[1]:
-                            total_time = total_time + transfer_time[t_index]
-                            break
-                        else:
-                            t_index = t_index + 1
+                    # while True:
+                    #     if config.transfer_time_range[0] <= transfer_time[t_index] <= config.transfer_time_range[1]:
+                    #         total_time = total_time + transfer_time[t_index]
+                    #         break
+                    #     else:
+                    #         t_index = t_index + 1
 
                     node.add_neighbor(self.nodes[node_id], total_time)
                     c_node.add_neighbor(node, total_time)
@@ -191,9 +191,10 @@ class Network:
 def simulation():
     s_config = config.Config()
     thread_pool = []
-    network = Network(s_config.relay_possibility, s_config.peer_size, s_config.neighbor_size)
-    network.generate_nodes()
-    simulate_msgs(network, 0)
+    for index in range(config.max_index):
+        network = Network(s_config.relay_possibility, s_config.peer_size, s_config.neighbor_size)
+        network.generate_nodes()
+        simulate_msgs(network, index)
     # for index in range(config.max_index):
     #     network = Network(s_config.relay_possibility, s_config.peer_size, s_config.neighbor_size)
     #     network.generate_nodes()
@@ -359,27 +360,6 @@ def statistics(network, distance, msg, target_time, root_index):
     time_array = np.array(list(distance.values()))
     time_array.sort()
     utils.save_result(time_array, total_redundant, network, msg, target_time, root_index)
-
-    # t_end = time_array[len(time_array) - 1]
-    # for end in reversed(time_array):
-    #     if end != Node.max_transfer_time:
-    #         t_end = end
-    #         break
-    # t_end = int(t_end + 1)
-    # t = np.arange(0, t_end, 10)
-    # result = []
-    # for value in t:
-    #     indexes = np.where(time_array > value)
-    #     if len(indexes) > 0:
-    #         result.append((1 + indexes[0][0]) / len(time_array))
-
-    # print(result[len(result) - 1])
-    # print(total_redundant)
-    # plt.xlabel("message propagation time")
-    # plt.ylabel("message coverage (%)")
-    # plt.plot(t, result)
-    # plt.legend("upper left")
-    # plt.show()
 
 
 if __name__ == '__main__':

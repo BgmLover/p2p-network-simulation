@@ -14,18 +14,18 @@ class Config:
 
 
 # save dir
-save_dir = "data/"
+save_dir = "data_1000/"
 
-neighbor_size_range = [7, 8, 9, 10, 11, 12, 13, 14, 15]
+neighbor_size_range = [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
 p_range = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]
 delay_range = [0.05, 0.6]  # 0.05s -- 0.6s
-levelset_size = 1000 * 0.5 * 7  # 3500kB
-block_size = 0.5  # 0.5 kB
+# levelset_size = 1000 * 0.5 * 7  # 3500kB
+block_size = 0.5 + 0.04  # 0.54 kB
 speed_range = [1 * 1000, 10 * 1000]  # 1M/s -- 10M/s
-transfer_time_range = [0.05, 0.35]  # 0.35s -- 3.5s
+transfer_time_range = [block_size/speed_range[1], block_size/speed_range[0]]
 
 target_time = 6  # 6s
 ttl_max = 10
-max_index = 100
+max_index = 1000
 
 show_log = True
