@@ -4,31 +4,33 @@ import numpy as np
 import config
 import utils
 
-coverage_threshold = 0.95
-
 
 def analyse():
+    index_max = config.max_index
     data = dict()
-    for root_index in range(config.max_index):
+    for root_index in range(index_max):
         data[root_index] = dict()
         msg_id = 0
         for neighbor_size in config.neighbor_size_range:
             data[root_index][neighbor_size] = dict()
             for alpha in config.p_range:
                 for msg_ttl in range(config.ttl_max):
-                    file_name = str(root_index) + '_' + str(neighbor_size) + "_" + str(alpha) + "_" + \
-                                str(msg_ttl) + "_" + str(msg_id) + ".json"
-                    result = utils.load_result(config.save_dir + file_name)
+                    f_dir = config.save_dir + str(root_index) + '/'
+                    file_name = str(neighbor_size) + "_" + str(alpha) + "_" + str(msg_ttl) + ".json"
+
+                    result = utils.load_result(f_dir + file_name)
                     msg_id = msg_id + 1
-                    target_index = int(result['peer_size'] * coverage_threshold)
+                    target_index = int(result['peer_size'] * config.target_coverage)
                     if result['coverage'] < target_index:
                         continue
                     if result['time_array'][target_index] > result['target_time']:
                         continue
+                    if result['time_array'][target_index] > config.target_time:
+                        continue
                     data[root_index][neighbor_size][msg_id] = result
 
     good = dict()
-    for root_index in range(config.max_index):
+    for root_index in range(index_max):
         good[root_index] = dict()
         for neighbor_size in config.neighbor_size_range:
             min_redundant = float('inf')
@@ -40,11 +42,10 @@ def analyse():
             good[root_index][neighbor_size] = min_case
 
     best = dict()
-    for root_index in range(config.max_index):
+    for root_index in range(index_max):
         min_redundant = float('inf')
         for neighbor_size in good[root_index]:
-            if good[root_index][neighbor_size]['target_time'] < config.target_time \
-                    and good[root_index][neighbor_size]['total_redundant'] < min_redundant:
+            if good[root_index][neighbor_size] is not None and good[root_index][neighbor_size]['total_redundant'] < min_redundant:
                 min_redundant = good[root_index][neighbor_size]['total_redundant']
                 best[root_index] = good[root_index][neighbor_size]
 
@@ -236,11 +237,11 @@ def plot_targettime_neighborsize():
 
 
 if __name__ == '__main__':
-    # analyse()
+    analyse()
     # plot_coverage_time()
     # plot_coverage_ttl_neighborsize()
     # plot_coverage_p_ttl()
     # plot_coverage_p_ttl_under_targettime()
     # plot_redundancy_p_ttl()
-    plot_redundancy_neighborsize_ttl()
+    # plot_redundancy_neighborsize_ttl()
     # plot_targettime_neighborsize()
